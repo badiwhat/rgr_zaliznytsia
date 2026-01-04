@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Додати рейс</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8 bg-slate-50">
+<div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
+    <h2 class="text-2xl font-bold text-slate-800 mb-6">Новий рейс</h2>
+    <form th:action="@{/admin/trip/save}" th:object="${trip}" method="post" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium text-slate-700">Номер рейсу</label>
+            <input type="text" th:field="*{tripNumber}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Напр: 705К" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-700">Дата та час</label>
+            <input type="datetime-local" th:field="*{departureTime}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-700">Вокзал</label>
+            <select th:field="*{station}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                <option th:each="st : ${stations}" th:value="${st.id}" th:text="${st.name + ' (' + st.city.name + ')'}"></option>
+            </select>
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition">Зберегти рейс</button>
+        <a href="/" class="block text-center text-slate-400 text-sm mt-4 hover:underline">Скасувати</a>
+    </form>
+</div>
+</body>
+</html>
