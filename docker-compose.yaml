@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: rgr_db_container
+    ports:
+      - "5433:5432"  # Зліва порт комп'ютера (5433), справа порт контейнера (5432)
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    restart: always

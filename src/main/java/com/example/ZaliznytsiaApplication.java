@@ -8,4 +8,5 @@ public class ZaliznytsiaApplication {
     public static void main(String[] args) {
         SpringApplication.run(ZaliznytsiaApplication.class, args);
     }
+
 }

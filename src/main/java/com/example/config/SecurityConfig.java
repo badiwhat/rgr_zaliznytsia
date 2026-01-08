@@ -13,13 +13,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Вимикаємо для простоти розробки
+                .csrf(csrf -> csrf.disable()) // Вимикаємо CSRF для спрощення розробки
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Тільки адмін
-                        .anyRequest().authenticated() // Решта — після входу
+                        // Всі запити за адресою /admin/... доступні тільки ролі ADMIN
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // Головна сторінка та стилі доступні всім авторизованим
+                        .requestMatchers("/", "/css/**", "/js/**").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(withDefaults()) // Стандартна форма входу
-                .logout(logout -> logout.logoutSuccessUrl("/"));
+                .logout(logout -> logout.logoutSuccessUrl("/login")); // При виході перенаправляємо на логін
 
         return http.build();
     }
